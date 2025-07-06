@@ -7,7 +7,7 @@ A minimal, responsive Kanban-style task management app inspired by Trello. Built
 ## 🚀 Live Demo
 
 [View Live Project](#)  
-*Replace with your deployed link once ready.*
+[To be replaced with the live website link once deployed in production]
 
 ---
 
