@@ -1,18 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import BoardList from '../components/BoardList';
+import Board from '../components/Board';
 
 export default function Dashboard() {
     return (
-        <div className="p-4">
-            <h1 className="text-3xl text-black font-bold mb-4">Trello Lite - My Boards</h1>
+        <Routes>
+            {/* Board List (default route) */}
+            <Route path="/" element={<BoardList />} />
 
-            <div className="space-y-2">
-                <div className="p-4 bg-white rounded shadow">
-                    <Link to="/board/1" className="text-blue-500 underline">Board 1</Link>
-                </div>
-                <div className="p-4 bg-white rounded shadow">
-                    <Link to="/board/2" className="text-blue-500 underline">Board 2</Link>
-                </div>
-            </div>
-        </div>
+            {/* Single Board View */}
+            <Route path=":boardId" element={<Board />} />
+        </Routes>
     );
 }

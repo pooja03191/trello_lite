@@ -3,12 +3,12 @@ import { Droppable, Draggable } from '@hello-pangea/dnd';
 
 export default function Column({ column, tasks, onAddTasks }) {
     return (
-        <div className="p-4 rounded flex flex-col">
+        <div className="bg-gray-100 p-4 rounded-2xl shadow-md flex flex-col w-72 min-h-[300px]">
             <h2 className="text-2xl text-black text-center font-bold mb-4">{column.title}</h2>
 
             <button
                 onClick={onAddTasks}
-                className="mt-4 mb-2 bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
+                className="mb-3 bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition"
             >
                 Add Task
             </button>
