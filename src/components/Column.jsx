@@ -1,9 +1,10 @@
 import Task from './Task';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-export default function Column({ title, tasks, onAddTasks }) {
+export default function Column({ column, tasks, onAddTasks }) {
     return (
         <div className="p-4 rounded flex flex-col">
-            <h2 className="text-2xl text-black text-center font-bold mb-4">{title}</h2>
+            <h2 className="text-2xl text-black text-center font-bold mb-4">{column.title}</h2>
 
             <button
                 onClick={onAddTasks}
@@ -12,11 +13,33 @@ export default function Column({ title, tasks, onAddTasks }) {
                 Add Task
             </button>
 
-            <div className="space-y-2 flex-1">
-                {tasks.map((task, index) => (
-                    <Task key={index} title={task.title} />
-                ))}
-            </div>
+            <Droppable droppableId={column.id}>
+                {(provided) => (
+                    <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        className="space-y-2 flex-1">
+                        {tasks.map((task, index) => (
+                            <Draggable
+                                key={task.id}
+                                draggableId={task.id}
+                                index={index}
+                                className="cursor-grab bg-white p-2 rounded shadow"
+                            >
+                                {(provided) => (
+                                    <Task
+                                        ref={provided.innerRef}
+                                        task={task}
+                                        dragProps={provided.draggableProps}
+                                        handleProps={provided.dragHandleProps}
+                                    />
+                                )}
+                            </Draggable>
+                        ))}
+                        {provided.placeholder}
+                    </div>
+                )}
+            </Droppable>
         </div>
     );
 }
