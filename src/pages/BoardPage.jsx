@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import Column from '../components/Column';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
 import { useState } from 'react';
 
 const columns = [
@@ -37,23 +37,34 @@ export default function BoardPage() {
     };
 
     const handleDragEnd = (result) => {
-        console.log('Drag Result:', result);
         const { source, destination } = result;
+        if (!destination) return;
 
-        if (!destination) return; // Dropped outside any column
+        // same column reorder
+        if (source.droppableId === destination.droppableId) {
+            setTasks(prev => {
+                const updated = Array.from(prev[source.droppableId]);
+                const [moved] = updated.splice(source.index, 1);
+                updated.splice(destination.index, 0, moved);
+                return { ...prev, [source.droppableId]: updated };
+            });
+            return;
+        }
 
-        const sourceTasks = Array.from(tasks[source.droppableId]);
-        const destTasks = Array.from(tasks[destination.droppableId]);
+        // move across columns
+        setTasks(prev => {
+            const sourceList = Array.from(prev[source.droppableId]);
+            const destList = Array.from(prev[destination.droppableId]);
+            const [moved] = sourceList.splice(source.index, 1);
+            destList.splice(destination.index, 0, moved);
 
-        const [movedTask] = sourceTasks.splice(source.index, 1);
-        destTasks.splice(destination.index, 0, movedTask);
-
-        setTasks((prev) => ({
-            ...prev,
-            [source.droppableId]: sourceTasks,
-            [destination.droppableId]: destTasks,
-        }));
-    }
+            return {
+                ...prev,
+                [source.droppableId]: sourceList,
+                [destination.droppableId]: destList,
+            };
+        });
+    };
 
 
     return (

@@ -1,5 +1,5 @@
 import Task from './Task';
-import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from '@hello-pangea/dnd';
 
 export default function Column({ column, tasks, onAddTasks }) {
     return (
@@ -18,13 +18,13 @@ export default function Column({ column, tasks, onAddTasks }) {
                     <div
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        className="space-y-2 flex-1">
+                        className="space-y-2 flex-1"
+                    >
                         {tasks.map((task, index) => (
                             <Draggable
                                 key={task.id}
                                 draggableId={task.id}
                                 index={index}
-                                className="cursor-grab bg-white p-2 rounded shadow"
                             >
                                 {(provided) => (
                                     <Task
