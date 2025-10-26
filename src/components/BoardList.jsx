@@ -8,7 +8,7 @@ export default function BoardList() {
         <div className="p-6">
             <h1 className="text-3xl font-bold mb-6">Your Boards</h1>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid">
                 {Object.values(boards).map(board => (
                     <Link
                         key={board.id}

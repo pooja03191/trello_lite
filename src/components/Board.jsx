@@ -18,9 +18,31 @@ export default function Board() {
         // dropped outside any column
         if (!destination) return;
 
+        // if source and destination are same
+        if (source.droppableId === destination.droppableId) {
+            return;
+        }
+
+        // Prevent moving directly from To Do to Done
+        if (
+            source.droppableId === "col-1" &&
+            destination.droppableId === "col-3"
+        ) {
+            alert("You cannot move a task directly from To Do to Done.");
+            return;
+        }
+
+        // Prevent duplicate tasks in destination column
+        const destColTasks = board.columns[destination.droppableId].taskIds;
+        if (destColTasks.includes(draggableId)) {
+            alert("This task already exists in the destination column.");
+            return;
+        }
+
+        // Moving within same board but different columns
         setBoards(prev => {
             const updated = { ...prev };
-            const board = { ...updated["board-1"] }; // 👈 or dynamic boardId
+            const board = { ...updated[boardId] };
 
             const sourceCol = board.columns[source.droppableId];
             const destCol = board.columns[destination.droppableId];
@@ -42,7 +64,7 @@ export default function Board() {
                 [destCol.id]: { ...destCol, taskIds: destTaskIds }
             };
 
-            updated["board-1"] = { ...board, columns: updatedColumns };
+            updated[boardId] = { ...board, columns: updatedColumns };
 
             return updated;
         });
@@ -58,7 +80,7 @@ export default function Board() {
                 <div className="flex gap-6 overflow-x-auto p-6 bg-gray-50 min-h-screen">
                     {board.columnOrder.map(colId => {
                         const column = board.columns[colId];
-                        const tasks = column.taskIds.map(tid => board.tasks[tid]);
+                        const tasks = column.taskIds && column.taskIds.length > 0 && column.taskIds.map(tid => board.tasks[tid]);
                         return (
                             <Column
                                 key={column.id}

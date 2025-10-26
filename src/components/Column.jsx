@@ -3,7 +3,7 @@ import { Droppable, Draggable } from '@hello-pangea/dnd';
 
 export default function Column({ column, tasks, onAddTasks }) {
     return (
-        <div className="bg-gray-100 p-4 rounded-2xl shadow-md flex flex-col w-72 min-h-[300px]">
+        <div className="bg-gray-100 p-4 rounded-2xl shadow-md flex flex-col flex-1 min-h-[300px]">
             <h2 className="text-2xl text-black text-center font-bold mb-4">{column.title}</h2>
 
             <button
@@ -20,7 +20,7 @@ export default function Column({ column, tasks, onAddTasks }) {
                         {...provided.droppableProps}
                         className="space-y-2 flex-1"
                     >
-                        {tasks.map((task, index) => (
+                        {tasks.length > 0 && tasks.map((task, index) => (
                             <Draggable
                                 key={task.id}
                                 draggableId={task.id}

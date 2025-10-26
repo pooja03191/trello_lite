@@ -24,13 +24,18 @@ export function BoardProvider({ children }) {
                     id: "col-2",
                     title: "In Progress",
                     taskIds: []
+                },
+                "col-3": {
+                    id: "col-3",
+                    title: "Done",
+                    taskIds: []
                 }
             },
             tasks: {
                 "task-1": { id: "task-1", title: "Set up project" },
                 "task-2": { id: "task-2", title: "Design UI" }
             },
-            columnOrder: ["col-1", "col-2"]
+            columnOrder: ["col-1", "col-2", "col-3"]
         }
     });
 
